@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model gigs {
@@ -24,9 +24,7 @@ model User {
   givenName     String
   googleId  String @unique
   photo     String?    
-  email     String? @unique
-  accessToken String? @unique
-  tokenExpiresAs DateTime?  
+  email     String?
   posts     Post[]
   profile   Profile?
   createdAt     DateTime @default(now())
