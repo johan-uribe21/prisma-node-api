@@ -1,5 +1,5 @@
 import njwt from "njwt";
-import * as userCrud from "../controllers/user/user.crud";
+import * as userCrud from "../user/user.crud";
 
 export function verifyAuthenticated(req, res, next) {
   if (req.user) {
@@ -13,7 +13,9 @@ export function verifyAuthenticated(req, res, next) {
 const { APP_SECRET } = process.env;
 
 export function encodeToken(tokenData) {
-  return njwt.create(tokenData, APP_SECRET).compact();
+  const jwt = njwt.create(tokenData, APP_SECRET);
+  jwt.setExpiration(new Date().getTime() + 24 * (60 * 60 * 1000)); // jwt expires in 24 hrs
+  return jwt.compact();
 }
 
 export function verifyAndDecode(token) {
@@ -21,7 +23,7 @@ export function verifyAndDecode(token) {
 }
 
 /**
- * Express middleware - attaches a user object to req if a valid jwt is included in the `Authorization` header
+ * Express middleware - attaches a user object to req if valid jwt is included in `Authorization: Bearer` header
  * @param req - Request object
  * @param res - Response object
  */

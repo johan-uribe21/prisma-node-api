@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model gigs {
@@ -47,8 +47,8 @@ model Post {
   rating      Float
   review      String?
   imageURI    String?
-  likes       Int         @default(0)
   communities Community[] @relation(references: [id])
+  likes       Int         @default(0)
   author      User        @relation(fields: [authorId], references: [id])
   authorId    Int
   createdAt   DateTime    @default(now())
@@ -57,7 +57,7 @@ model Post {
 
 model Community {
   id    Int    @id @default(autoincrement())
-  name  String @unique
+  name  String
   posts Post[] @relation(references: [id])
   users User[] @relation(references: [id])
 }

@@ -6,29 +6,16 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 
-// Database
-import db from "./config/database";
-
 // auth
 import passport from "./config/authConfig";
 
 // utils
-import * as authUtils from "./utilities/authUtilities";
+import * as authUtils from "./controllers/auth/authUtilities";
 
 // routers
 import gigRouter from "./controllers/gig/gig.routes";
 import userRouter from "./controllers/user/user.routes";
-
-async function testDB() {
-  try {
-    await db.connect();
-    console.log("DB Connection has been established successfully");
-  } catch (e) {
-    console.error("Unable to connect to database", e);
-  }
-}
-
-testDB();
+import postRouter from "./controllers/post/post.routes";
 
 const app = express();
 
@@ -58,6 +45,7 @@ app.get(
 
 app.use("/gigs", authUtils.verifyAuthenticated, gigRouter);
 app.use("/user", authUtils.verifyAuthenticated, userRouter);
+app.use("/post", authUtils.verifyAuthenticated, postRouter);
 
 // fallback
 app.use(function (req, res, next) {

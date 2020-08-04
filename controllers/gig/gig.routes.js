@@ -1,5 +1,5 @@
 import express from "express";
-import * as gigController from "./gig.controller";
+import * as gigController from "./gig.controllers";
 
 const router = express.Router();
 

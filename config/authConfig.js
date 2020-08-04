@@ -13,7 +13,7 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, cb) {
       try {
-        const user = await userCRUD.findOrCreate(profile, accessToken);
+        const user = await userCRUD.findOrCreateUser(profile, accessToken);
         return cb(null, user);
       } catch (err) {
         return cb(err, false);
